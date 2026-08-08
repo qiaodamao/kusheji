@@ -1,0 +1,54 @@
+{
+  "name": "kusheji",
+  "version": "1.1.0",
+  "description": "基于 vitepress 打造的适合图文资源分享的博客主题",
+  "author": "乔同学",
+  "license": "MIT",
+  "homepage": "https://kusheji.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/"
+  },
+  "main": "index.js",
+  "scripts": {
+    "dev": "vitepress dev docs --open --host 0.0.0.0",
+    "build": "vitepress build docs",
+    "serve": "vitepress serve docs"
+  },
+  "keywords": [
+    "vitepress",
+    "theme",
+    "APP比比"
+  ],
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^20.10.3",
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
+    "@typescript-eslint/parser": "^6.13.1",
+    "@typescript-eslint/types": "^6.13.1",
+    "@vue/compiler-sfc": "^3.3.9",
+    "eslint": "^8.55.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-vue": "^9.19.2",
+    "fs-extra": "^11.2.0",
+    "globby": "^14.0.0",
+    "gray-matter": "^4.0.3",
+    "pg": "^8.11.3",
+    "prettier": "^3.1.0",
+    "typescript": "^5.9.3",
+    "vitepress": "^1.6.4"
+  },
+  "dependencies": {
+    "blueimp-md5": "^2.19.0",
+    "dayjs": "^1.11.19",
+    "feed": "^5.2.0",
+    "floating-vue": "^5.2.2",
+    "markdown-it-custom-attrs": "^1.0.2",
+    "pagefind": "^1.0.4",
+    "pinia": "^3.0.4",
+    "swiper": "^12.1.0",
+    "vitepress-plugin-pagefind": "^0.4.18",
+    "vue3-toastify": "^0.2.1"
+  }
+}

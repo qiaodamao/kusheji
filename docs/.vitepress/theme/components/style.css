@@ -1,0 +1,958 @@
+/** pagefind搜索样式 - 开始 */
+.VPNav .blog-search .nav-search-btn-wait {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    width: 48px;
+    height: 55px;
+    background: transparent;
+    transition: border-color .25s;
+}
+
+.VPNav .blog-search .nav-search-btn-wait:hover {
+    background: transparent
+}
+
+.VPNav .blog-search .nav-search-btn-wait:focus {
+    outline: 1px dotted;
+    outline: 5px auto -webkit-focus-ring-color
+}
+
+.VPNav .blog-search .nav-search-btn-wait:focus:not(:focus-visible) {
+    outline: none!important
+}
+
+.VPNav .blog-search .nav-search-btn-wait svg {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    color: var(--vp-c-text-1);
+    fill: currentColor;
+    transition: color .5s;
+}
+
+.VPNav .blog-search .nav-search-btn-wait .search-tip{
+    display: none;
+    margin-top: 2px;
+    padding: 0 16px 0 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--vp-c-text-2);
+    transition: color .5s;
+}
+
+.VPNav .blog-search .nav-search-btn-wait .metaKey {
+    margin: 2px 0 0;
+    border: 1px solid var(--vp-c-divider);
+    border-radius: 4px;
+    padding-left: 6px;
+    min-width: 0;
+    width: auto;
+    height: 22px;
+    line-height: 22px;
+    font-family: var(--vp-font-family-base);
+    font-size: 12px;
+    font-weight: 500;
+    transition: color .5s,border-color .5s;
+    padding-right: 6px;
+}
+
+.algolia [command-input] {
+    border: 1px solid var(--vp-c-divider);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    cursor: text;
+    padding: 6px 12px;
+    font-size: inherit;
+    width: 100%;
+    color: inherit;
+}
+
+.algolia [command-input]:focus-within {
+    border-color: var(--vp-c-brand-1)
+}
+
+.algolia [command-dialog-header] {
+    padding: 0px;
+}
+
+.algolia [command-dialog-body] {
+    padding: 0px;
+}
+
+.algolia [command-dialog-wrapper] {
+    position: relative;
+    padding: 12px;
+    margin: 64px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: var(--vp-local-search-bg);
+    max-width:min(100vw - 60px,900px);
+    width: min(100vw - 60px,900px);
+    height: min-content;
+    max-height: min(100vh - 128px,900px);
+    border-radius: 6px;
+}
+
+.algolia [command-dialog-mask] {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: var(--vp-backdrop-bg-color);
+    transition: opacity .5s;
+    z-index: 100000;
+}
+
+.algolia [command-dialog-footer] {
+    box-shadow: none;
+    border: none;
+    background-color: transparent;
+    height:22px;
+    margin:0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.algolia .command-palette-logo {
+    display: none;
+}
+
+.algolia .command-palette-commands {
+    font-size: .8rem;
+    opacity: 75%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    line-height: 14px;
+}
+
+.algolia .command-palette-commands-key {
+    background: rgba(128,128,128,.1);
+    border-radius: 4px;
+    padding: 3px 6px;
+    min-width: 24px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid rgba(128,128,128,.15);
+    box-shadow: 0 2px 2px #0000001a;
+    width: auto;
+    height: auto;
+    margin-right: 0;
+}
+.algolia .command-palette-commands li {
+display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.algolia .command-palette-commands li:not(:last-of-type) {
+    margin-right: 0;
+}
+
+.algolia [command-group-heading] {
+    margin: 0;
+    padding: 0;
+    color: var(--vp-c-brand-1);
+}
+
+.algolia [command-group-items] {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.algolia [command-item] {
+    position: relative;
+    content-visibility: auto;
+    cursor: pointer;
+    height: 56px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0px 16px;
+    color: var(--gray12);
+    user-select: none;
+    will-change: background, color;
+    transition: all 150ms ease;
+    transition-property: none;
+    border-radius: 4px;
+    margin-top: 4px;
+    background-color: var(--lowContrast);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 4px;
+    transition: none;
+    line-height: 1rem;
+    border: solid 2px var(--vp-local-search-result-border);
+    outline: none;
+    background-color: transparent;
+    padding:0;
+    height: auto;
+}
+
+.search-dialog div[command-item] > div.link {
+    margin: 12px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.algolia [command-item][aria-selected='true'], .algolia [command-item]:hover {
+    --vp-local-search-result-bg: var(--vp-local-search-result-selected-bg);
+    border-color: var(--vp-local-search-result-selected-border);
+    background-color: transparent;
+    color: var(--vp-c-brand-1)!important;
+}
+
+.search-dialog div[command-item] .title {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
+    line-height: 20px;
+    margin-bottom: 4px;
+    font-size: 16px;
+}
+
+.search-dialog div[command-item] .des {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: keep-all;
+    white-space: nowrap;
+    opacity: .8;
+}
+
+.search-dialog div[command-item] .date {
+    min-width: 80px;
+    font-size: 12px;
+    opacity: .4;
+}
+
+.search-dialog div[command-item] .title mark, .search-dialog div[command-item] .des mark {
+    background-color: var(--vp-local-search-highlight-bg);
+    color: var(--vp-local-search-highlight-text);
+    border-radius: 2px;
+    padding: 0 2px;
+}
+
+@media (min-width: 768px) {
+    .VPNav .blog-search .nav-search-btn-wait {
+        display: flex;
+        justify-content: flex-start;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        padding: 0 10px 0 12px;
+        width: auto;
+        height: 40px;
+        background-color: var(--vp-c-bg-alt);
+    }
+
+    .VPNav .blog-search .nav-search-btn-wait:hover {
+        border-color: var(--vp-c-brand-1);
+        background: var(--vp-c-bg-alt)
+    }
+
+    .VPNav .blog-search .nav-search-btn-wait .search-tip {
+        display: inline-block;
+    }
+
+    .VPNav .blog-search .nav-search-btn-wait svg {
+        top: 1px;
+        margin-right: 8px;
+        width: 14px;
+        height: 14px;
+        color: var(--vp-c-text-2);
+    }
+}
+/** pagefind搜索样式 - 结束 */
+
+/* 防止页面出现横向滚动条 */
+html, body {
+    overflow-x: hidden;
+}
+
+/* 确保容器不超出屏幕宽度 */
+.VPDoc, .container, .content {
+    overflow-x: hidden;
+}
+
+/* footer全屏显示：确保父容器不裁剪 - Footer已移至layout-bottom插槽，不再需要 */
+
+/* 全局导航栏宽度统一 */
+.VPNavBar {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.VPNavBar .wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+}
+
+.VPNavBar .content-body {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 20px !important;
+    box-sizing: border-box !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+
+.VPNavBar:not(.top) .content-body {
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+
+/* 修改导航栏搜索按钮的放大镜样式 */
+.VPNavBarSearch .DocSearch-Button .DocSearch-Button-Placeholder {
+    display: none !important;
+}
+
+.VPNavBarSearch .DocSearch-Button svg {
+    width: 16px !important;
+    height: 16px !important;
+    color: var(--vp-c-text-2) !important;
+}
+
+/* 移动端导航栏样式：确保logo和名字在左侧显示 */
+@media (max-width: 768px) {
+    :root {
+        --vp-nav-height: 44px;
+    }
+
+    .VPNavBar {
+        background-color: var(--bgfilter) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        box-shadow: none !important;
+        border-bottom: none !important;
+    }
+
+    .VPNavBar:not(.top) {
+        box-shadow: none !important;
+        border-bottom: none !important;
+    }
+
+    .VPNavBar .wrapper,
+    .VPNavBar:not(.top) .wrapper {
+        box-shadow: none !important;
+        border-bottom: none !important;
+    }
+
+    .VPNavBar .content-body {
+        background-color: transparent !important;
+        border-bottom: none !important;
+        box-shadow: none !important;
+    }
+
+    .VPNavBar:not(.top) .content-body {
+        border-bottom: none !important;
+        box-shadow: none !important;
+    }
+
+    .VPNav {
+        box-shadow: none !important;
+        border-bottom: none !important;
+    }
+
+    .VPNav .divider,
+    .VPNav .curtain {
+        display: none !important;
+    }
+
+    .home .VPDoc,
+    .home .VPContent {
+        border-top: none !important;
+        box-shadow: none !important;
+    }
+
+    .nav-search-btn-wait svg {
+        stroke-width: 2;
+    }
+
+    .VPNav .blog-search .nav-search-btn-wait {
+        width: 40px;
+        height: 44px;
+    }
+
+    /* 移除移动端搜索按钮点击时的蓝色描边 */
+    .VPNav .blog-search .nav-search-btn-wait:focus,
+    .VPNav .blog-search .nav-search-btn-wait:focus-visible,
+    .VPNav .blog-search .nav-search-btn-wait:active,
+    .VPNav .blog-search .nav-search-btn-wait:hover {
+        outline: none !important;
+        -webkit-tap-highlight-color: transparent;
+        box-shadow: none !important;
+        border-color: transparent !important;
+    }
+
+    /* 直接控制导航栏容器左对齐 */
+    .VPNavBar .content-body {
+        display: flex !important;
+        align-items: center !important;
+        padding: 0 10px 0 20px !important;
+    }
+    
+    /* logo链接区域靠左，其他内容自动靠右 */
+    .VPNavBar .content-body > .VPNavBarTitle,
+    .VPNavBar .content-body > [class*="title"] {
+        margin-right: auto !important;
+    }
+    
+    /* 隐藏可能干扰的伪元素 */
+    .VPNavBar .content-body::before,
+    .VPNavBar .content-body::after {
+        display: none !important;
+    }
+}
+@font-face {
+    font-family: "beebee";
+    font-weight: 400;
+    src: url("/static/font/beebee.woff") format("woff");
+    font-display: swap;
+}
+
+:root {
+    --vp-c-brand: #0057ff;
+    --vp-c-brand-1: #0057ff;
+    --vp-c-brand-2: #0057ff;
+    --vp-font-family-base: Fira Code, -apple-system, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Helvetica, Arial, sans-serif;
+    --vp-layout-max-width: 1280px;   /*设置为1280px*/
+    --swiper-theme-color: var(--vp-c-brand);
+    --fancybox-accent-color: var(--vp-c-brand-1);
+    --bgfilter: rgba(255,255,255,.75);
+}
+
+.dark {
+    --bgfilter: rgba(27,27,31,.75);
+}
+
+[aria-label="red"] {
+    color: #f00 !important;
+  }
+
+.Layout {
+    min-height: 100vh;
+}
+
+.VPNavBarTitle .title,
+.site-footer .title {
+    font-family: "beebee", var(--vp-font-family-base);
+}
+
+.VPNavBarTitle .title {
+    font-size: 17px;
+}
+
+.vp-doc a {
+    color: var(--vp-c-text-1);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.vp-doc h1:first-child {
+    display: none;
+}
+
+.vp-doc img {
+    border-radius: 0;
+    box-shadow: var(--vp-shadow-1);
+    cursor: zoom-in;
+}
+
+.VPDoc {
+    padding: 32px 0 0 !important;
+    width: 100%;
+}
+
+/* 首页特殊处理：移除 VPDoc 顶部 padding，让大图紧贴导航栏 */
+.home .VPDoc {
+    padding-top: 0 !important;
+}
+
+/* 将左右padding转移到内容区域，让footer能全屏显示 */
+.VPDoc .container {
+    padding: 0 20px !important;
+    box-sizing: border-box !important;
+}
+
+/* 所有页面容器宽度统一为1280px */
+.VPDoc .container {
+    max-width: 1280px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+}
+
+.VPDoc .content {
+    max-width: 1280px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+}
+
+/* 隐藏首页的aside容器，去除空白 */
+.home .aside {
+    display: none !important;
+}
+
+/* aside目录为空时隐藏，避免占位 */
+.aside:not(:has(.has-outline)) {
+    display: none !important;
+}
+
+.VPDoc:not(.has-aside) .content-container {
+    max-width: 100% !important;
+}
+
+/* 确保左侧内容区域在没有侧边栏时能够完全填充宽度 */
+.home .VPDoc.has-aside {
+    display: block !important;
+}
+
+.home .VPDoc.has-aside .content-container {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+}
+
+.home .VPDoc.has-aside .content {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+}
+
+.bgimg {
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
+/* 瀑布流布局 - 响应式 */
+.postlist.grid {
+    column-count: 4;
+    column-gap: 16px;
+}
+
+/* 防止卡片在列之间被分割 */
+.postlist.grid .list {
+    break-inside: avoid;
+    margin-bottom: 16px;
+}
+
+/* 中等屏幕（<1200px）：3列 */
+@media (max-width: 1200px) {
+    .postlist.grid {
+        column-count: 3;
+    }
+}
+
+/* 小屏幕（<900px）：2列 */
+@media (max-width: 900px) {
+    .postlist.grid {
+        column-count: 2;
+    }
+}
+
+.VPDoc.has-aside .content-container {
+    max-width: 100% !important;
+}
+
+.VPDoc.has-sidebar .content-container {
+    max-width: 100% !important;
+}
+.fireworkwrap {
+    display: none;
+}
+
+
+
+@media (min-width: 768px) {
+    .VPDoc .container {
+        padding: 0 20px !important;
+    }
+
+    .VPDoc {
+        padding: 48px 0 0 !important;
+    }
+
+    .home .VPDoc {
+        padding-top: 0 !important;
+    }
+}
+
+@media (min-width: 960px) {
+    .VPDoc .container {
+        padding: 0 !important;
+    }
+
+    .post .VPDoc.has-aside .content-container,
+    .post .VPDoc.has-sidebar .content-container,
+    .post .VPDoc:not(.has-aside) .content-container {
+        max-width: 960px !important;
+        margin: 0 auto !important;
+    }
+
+    /* PC端导航栏全屏显示 - 适用于所有页面和状态 */
+    .VPNavBar {
+        background-color: var(--bgfilter) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+    }
+
+    .VPNavBar .content-body,
+    .VPNavBar:not(.top) .content-body,
+    .VPNavBar.top .content-body {
+        position: relative;
+        background-color: transparent !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        padding: 0 32px !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* PC端导航栏全屏显示 - 适用于所有页面 */
+    .VPNavBar .container,
+    .VPNavBar:not(.top) .container,
+    .VPNavBar.top .container {
+        max-width: 100% !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    .VPNavBar .content,
+    .VPNavBar:not(.top) .content,
+    .VPNavBar.top .content {
+        max-width: 100% !important;
+        width: 100% !important;
+        padding: 0 32px !important;
+        box-sizing: border-box !important;
+    }
+    .fireworkwrap {
+        display: block;
+    }
+    .VPDoc .container>.content {
+        padding: 0 0 32px;
+    }
+
+    .VPSidebar {
+        min-height: calc(100% - var(--vp-nav-height));
+        padding-bottom:32px!important;
+    }
+
+    .home .VPDoc:not(.has-sidebar):not(.has-aside) .container {
+        max-width: calc(var(--vp-layout-max-width) - 64px);
+    }
+
+    .home .VPDoc .content {
+        max-width: 100%;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .home .VPDoc.has-aside:not(.has-sidebar) .container {
+        max-width: calc(var(--vp-layout-max-width) - 64px);
+    }
+
+    .home .VPDoc:not(.has-sidebar) .container .content {
+        max-width: 100%;
+    }
+
+
+
+}
+
+@media (min-width: 1100px) {
+    .home .VPDoc:not(.has-sidebar):not(.has-aside) .container {
+        max-width: calc(var(--vp-layout-max-width) - 64px);
+    }
+
+    .home .VPDoc.has-aside:not(.has-sidebar) .container {
+        max-width: calc(var(--vp-layout-max-width) - 64px);
+    }
+
+    .home .VPDoc:not(.has-sidebar) .container .content {
+        max-width: 100%;
+    }
+
+
+}
+
+@media (min-width: 1280px) {
+    .home .VPDoc:not(.has-sidebar):not(.has-aside) .container {
+        max-width: calc(var(--vp-layout-max-width) - 64px);
+    }
+
+    .home .VPDoc.has-aside:not(.has-sidebar) .container {
+        max-width: calc(var(--vp-layout-max-width) - 64px);
+    }
+
+    .home .VPDoc:not(.has-sidebar) .container .content {
+        max-width: 100%;
+    }
+
+
+}
+
+@media (min-width: 1440px) {
+    .home .VPDoc:not(.has-sidebar):not(.has-aside) .container {
+        max-width: calc(var(--vp-layout-max-width) - 64px);
+    }
+
+    .home .VPDoc.has-aside:not(.has-sidebar) .container {
+        max-width: calc(var(--vp-layout-max-width) - 64px);
+    }
+
+    .home .VPDoc:not(.has-sidebar) .container .content {
+        max-width: 100%;
+    }
+
+
+}
+
+.VPBadge {
+    display: inline-block;
+    margin-left: 2px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 0 8px;
+    line-height: 17px;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.VPBadge.mini {
+    transform: translateY(-5px) scale(1);
+    transform-origin: left center;
+}
+
+.VPBadge.tip {
+    border-color: var(--vp-badge-tip-border);
+    color: var(--vp-badge-tip-text);
+    background-color: var(--vp-badge-tip-bg);
+}
+
+.VPBadge.warning {
+    border-color: var(--vp-badge-warning-border);
+    color: var(--vp-badge-warning-text);
+    background-color: var(--vp-badge-warning-bg);
+}
+
+.VPBadge.danger {
+    border-color: var(--vp-badge-danger-border);
+    color: var(--vp-badge-danger-text);
+    background-color: var(--vp-badge-danger-bg);
+}
+
+.VPBadge.info {
+    border-color: var(--vp-badge-info-border);
+    color: var(--vp-badge-info-text);
+    background-color: var(--vp-badge-info-bg);
+}
+
+.repeatbg {
+    background-image: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.2),
+            rgba(255, 255, 255, 0.2) 25%,
+            rgba(255, 255, 255, 0) 25%,
+            rgba(255, 255, 255, 0) 50%,
+            rgba(255, 255, 255, 0.2) 50%,
+            rgba(255, 255, 255, 0.2) 75%,
+            rgba(255, 255, 255, 0) 75%,
+            rgba(255, 255, 255, 0) 100%);
+    background-size: 30px 30px;
+}
+
+.v-popper--theme-tooltip .v-popper__inner {
+    font-size: 12px;
+
+}
+
+.v-popper--theme-dropdown .v-popper__inner,
+.specialpop {
+    background-color: var(--vp-c-bg);
+    color: var(--vp-c-text-1);
+    border-radius: 6px;
+    border: 1px solid var(--vp-c-gutter);
+    box-shadow: 0 6px 30px #0000001a;
+}
+
+.v-popper--theme-dropdown .v-popper__arrow-inner {
+    border-color: var(--vp-c-bg);
+}
+
+.v-popper--theme-dropdown .v-popper__arrow-outer {
+    border-color: var(--vp-c-gutter);
+}
+
+.aside .aside-container {
+    position: sticky;
+    padding-top: 0px;
+    top: calc(var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + var(--vp-doc-top-height, 0px) + 32px);
+    height: auto;
+    overflow-y: hidden;
+}
+
+.Vue-Toastification__toast--default {
+    background-color: var(--vp-c-brand) !important;
+    color: #fff !important;
+    backdrop-filter: blur(20px);
+}
+
+.Vue-Toastification__toast--success {
+    background-color: var(--vp-c-brand) !important;
+    color: #fff !important;
+    backdrop-filter: blur(20px);
+}
+
+.Vue-Toastification__toast--error {
+    background-color: #e74c3c !important;
+    color: #fff !important;
+}
+
+.Vue-Toastification__container {
+    z-index: 99999 !important;
+}
+
+p.icons img {
+    display: inline;
+    margin-right: 5px;
+}
+
+.aside-content {
+    min-height: auto !important;
+}
+
+.VPNavBar .divider,.curtain {
+    display: none !important;
+}
+
+.VPNav {
+    box-shadow: none !important;
+    border-bottom: none !important;
+}
+
+.VPNavBar,
+.VPNavBar:not(.top),
+.VPNavBar.top {
+    box-shadow: none !important;
+    border-bottom: none !important;
+}
+
+.VPNavBar .wrapper,
+.VPNavBar:not(.top) .wrapper,
+.VPNavBar.top .wrapper {
+    box-shadow: none !important;
+    border-bottom: none !important;
+}
+
+.VPNavBarTitle {
+    display: none !important;
+}
+
+.VPNavBarTitle .title {
+    border-bottom: none !important;
+}
+
+/* 隐藏所有页面的左侧边栏 */
+.VPSidebar {
+    display: none !important;
+}
+
+/* 调整内容区域布局 */
+.VPDoc.has-sidebar .container {
+    grid-template-columns: 1fr !important;
+}
+
+/* 移除侧边栏宽度 */
+.VPDoc.has-sidebar {
+    --vp-sidebar-width: 0px !important;
+}
+
+.VPContent.has-sidebar {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+@media (min-width: 1440px) {
+    .VPContent.has-sidebar {
+        padding-left: calc((100vw - var(--vp-layout-max-width)) / 2) !important;
+        padding-right: calc((100vw - var(--vp-layout-max-width)) / 2) !important;
+    }
+}
+
+.VPDoc.has-aside .content-container .main img {
+    width: 100%;
+}
+
+/* 隐藏移动端顶部返回顶部按钮 */
+.VPLocalNavOutlineDropdown {
+    display: none !important;
+}
+
+/* 隐藏无侧边栏页面的菜单栏 */
+.no-sidebar .VPLocalNav {
+    display: none !important;
+}
+
+/* 隐藏首页的 VPLocalNav（移动端滚动后出现的灰色线条） */
+.home .VPLocalNav {
+    display: none !important;
+}
+
+/* 移动端隐藏文章详情页和工具页的菜单按钮 */
+@media (max-width: 768px) {
+    .post .VPLocalNav .menu,
+    .tools .VPLocalNav .menu {
+        display: none !important;
+    }
+}
+
+/* 返回顶部按钮样式 */
+#back-to-top {
+    position: fixed !important;
+    bottom: 30px !important;
+    right: 30px !important;
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 50% !important;
+    background-color: #f0f0f0 !important;
+    color: black !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    z-index: 999999 !important;
+    box-shadow: none !important;
+    transition: all 0.3s ease !important;
+    font-size: 24px !important;
+    font-weight: bold !important;
+}
+
+#back-to-top:hover {
+    background-color: #e0e0e0 !important;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    #back-to-top {
+        bottom: 20px !important;
+        right: 20px !important;
+        width: 40px !important;
+        height: 40px !important;
+    }
+}
+
+/* ===== Footer 样式已在 Footer.vue 中定义 ===== */
