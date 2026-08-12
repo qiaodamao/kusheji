@@ -42,5 +42,8 @@ export async function genFeed(config: SiteConfig) {
     })
   }
 
-  writeFileSync(path.join(config.outDir, 'feed.rss'), feed.rss2())
+  const rssContent = feed.rss2()
+  const rssWithUtf8Decl = rssContent.replace(/^<\?xml[^?]*\?>/, '<?xml version="1.0" encoding="UTF-8"?>')
+  const bom = '\uFEFF'
+  writeFileSync(path.join(config.outDir, 'feed.rss'), bom + rssWithUtf8Decl, 'utf-8')
 }
