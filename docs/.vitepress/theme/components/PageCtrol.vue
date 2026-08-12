@@ -72,8 +72,8 @@ const randomdata = computed(() => randomOne(themeposts))
 
     .a {
       background-color: var(--vp-c-bg-alt);
-      border-radius: 4px;
-      padding: 2px 10px;
+      border-radius: 999px;
+      padding: 6px 16px;
       display: flex;
       flex-direction: row;
       margin-right: 8px;

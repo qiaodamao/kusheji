@@ -956,3 +956,48 @@ p.icons img {
 }
 
 /* ===== Footer 样式已在 Footer.vue 中定义 ===== */
+
+/* 隐藏移动端下拉菜单中的社交链接（如 GitHub） */
+.VPNavScreen .VPSocialLinks {
+    display: none !important;
+}
+
+/* 修复导航栏额外菜单（VPFlyout）下拉被遮挡问题 */
+.VPNavBar .VPFlyout .menu {
+    z-index: 1000 !important;
+}
+
+/* 确保 VPFlyout 容器不裁剪下拉菜单（排除汉堡菜单自身的 container） */
+.VPNavBar .content,
+.VPNavBar .content-body,
+.VPNavBar .wrapper {
+    overflow: visible !important;
+}
+
+/* 中等屏幕（768-1280px）：直接显示主题切换按钮，隐藏 GitHub 社交链接和额外菜单（⋯）按钮 */
+@media (min-width: 768px) and (max-width: 1279px) {
+    .VPNavBar .VPNavBarExtra {
+        display: none !important;
+    }
+    .VPNavBar .VPNavBarSocialLinks {
+        display: none !important;
+    }
+    .VPNavBar .VPNavBarAppearance {
+        display: flex !important;
+        align-items: center;
+    }
+    /* appearance 前的分隔线 */
+    .VPNavBar .VPNavBarMenu + .VPNavBarAppearance::before {
+        content: "";
+        margin-right: 8px;
+        margin-left: 8px;
+        width: 1px;
+        height: 24px;
+        background-color: var(--vp-c-divider);
+    }
+    /* 隐藏文章样式切换按钮（ModalToggle）右侧的分隔竖线 */
+    .modal-toggle-divider {
+        display: none !important;
+    }
+}
+

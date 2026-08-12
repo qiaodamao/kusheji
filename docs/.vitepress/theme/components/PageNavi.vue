@@ -61,12 +61,12 @@
       </li>
       <li class="li" v-for="(item, key) in data" @click="choose(String(key)); goCategory(String(key))"
         :class="{ on: currentCategory === String(key) }">
-        <span class="a">{{ key }}<strong
-            class="VPBadge tip strong mini">{{ data[key].length }}</strong></span>
+        <span class="a">{{ key }}<!-- <strong
+            class="VPBadge tip strong mini">{{ data[key].length }}</strong> --></span>
       </li>
     </ul>
   </div>
-  
+
   <!-- 左侧边栏菜单 -->
   <div class="mainnavi left" v-else>
     <ul class="ul">
