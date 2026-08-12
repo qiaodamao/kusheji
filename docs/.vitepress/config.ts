@@ -64,6 +64,24 @@ export default defineConfig<ThemeConfig>({
                 "lrc": ""
             }
         ],
+        heroBgMode: 'custom', //首页大图背景模式：'random' 随机文章封面图 | 'custom' 自定义背景图
+        heroBgImage: [ //首页大图自定义背景，heroBgMode 为 'custom' 时生效，每次刷新随机显示一张，不需要就注释掉
+            {
+                link: 'https://sucai.kusheji.com/',
+                image: 'https://wkphoto.bj.bcebos.com/810a19d8bc3eb135c2cd2fe0b61ea8d3fd1f4467.jpg',
+                title: '素材站'
+            },
+            {
+                link: 'https://kusheji.com/',
+                image: 'https://wkphoto.bj.bcebos.com/b90e7bec54e736d1ec3317538b504fc2d562694d.jpg',
+                title: '酷设计'
+            },
+            {
+                link: 'https://kusheji.com/',
+                image: 'https://wkphoto.bj.bcebos.com/060828381f30e924e587076a5c086e061d95f74e.jpg',
+                title: '酷设计'
+            }
+        ],
         banner: [ //主页轮播，不需要就注释掉
             {
                 link: 'https://sucai.kusheji.com/',
@@ -168,16 +186,16 @@ export default defineConfig<ThemeConfig>({
             welcome: {
                 autoClose: 6000, //多长时间自动关闭，false为不关闭
             },
-            showSnow: false, //是否开启雪花。开启后仅在暗黑模式下显示
+            showSnow: false, //是否开启雪花。暗黑模式白色雪花，亮色模式灰蓝雪花
             showUserCard: false, //是否显示列表中的博主名片
             cardPosition: 3, //显示在第几个位置
             cardMusic: true, //是否显示播放音乐，音乐列表在上面 music中配置
             cardCoffee: true, //是否显示打赏咖啡，
-            coffeeQrcode: 'https://talk.shijuefuhao.com/images/v8/code2.jpg', //打赏咖啡二维码图片地址。如果是跳转网页地址需自行修改代码
+            coffeeQrcode: 'https://talk.shijuefuhao.com/images/code2.jpg', //打赏咖啡二维码图片地址。如果是跳转网页地址需自行修改代码
             showLantern: false, //是否显示灯笼挂件
             lanternText: ['新', '年'], //灯笼上的字,数组形式
             showFirework: false, //是否显示侧栏烟花特效
-            fireworkTitle: '🧨烟花许愿🧨｜②⓪②④新年', //烟花许愿标题
+            fireworkTitle: '🧨烟花许愿🧨｜②⓪②⑦新年', //烟花许愿标题
             fireworkWords: ['恭贺新禧', '万事如意', '新年快乐', '恭喜发财', '岁岁平安', '吉祥如意', '心想事成', '万事顺遂', '一帆风顺', '二龙腾飞', '三羊开泰', '四季平安', '五福临门', '六六大顺', '七星高照', '八方来财', '九九同心', '十全十美', '荣华富贵', '金玉满堂', '龙凤呈祥', '喜气洋洋', '鸿运当头', '财源广进', '笑口常开', '幸福安康', '日进斗金', '生意兴隆', '步步高升', '年年有余', '迎春接福', '喜气盈门', '花团锦簇', '前程似锦', '福满人间', '春回大地', '辞旧迎新', '万象更新', '吉祥如意', '万事大吉', '马到成功', '功成名就', '鱼跃龙门', '一飞冲天', '瑞气盈门', '福寿康宁', '时来运转', '鸿运高照', '三阳开泰', '否极泰来', '鸿运亨通', '一帆风顺', '出入平安', '顺风顺水', '龙凤呈祥', '花好月圆', '张灯结彩', '欢天喜地', '合家欢乐', '幸福美满', '和气致祥', '招财进宝', '开门大吉', '迎春接福', '福泽满门', '花开富贵', '竹报平安', '大吉大利', '恭喜发财'], //烟花许愿关键词
             showFooter: true, //是否显示全局底部信息
             showArticleModal: true, //是否启用文章卡片弹窗预览，true为弹窗显示，false为直接跳转详情页
@@ -193,7 +211,7 @@ export default defineConfig<ThemeConfig>({
     srcExclude: ['README.md'],
     vite: {
         server: {
-            port: 5000,
+            port: 5173,
             host: '0.0.0.0'
         },
         css: {

@@ -19,7 +19,7 @@ import {
   setCSSProperty,
   setInnerHTML,
   showWarning
-} from "./chunk-LVBMC5WQ.js";
+} from "./chunk-SDPRHBCA.js";
 import {
   computed,
   h,
@@ -32,7 +32,7 @@ import {
   provide,
   ref,
   watch
-} from "./chunk-SNNOYR6U.js";
+} from "./chunk-IGPK6NSI.js";
 import "./chunk-BUSYA2B4.js";
 
 // node_modules/swiper/shared/swiper-core.mjs
@@ -631,9 +631,8 @@ function updateSlides() {
       allSlidesSize += slideSizeValue + (spaceBetween || 0);
     });
     allSlidesSize -= spaceBetween;
-    const offsetSize = (offsetBefore || 0) + (offsetAfter || 0);
-    if (allSlidesSize + offsetSize < swiperSize) {
-      const allSlidesOffset = (swiperSize - allSlidesSize - offsetSize) / 2;
+    if (allSlidesSize < swiperSize) {
+      const allSlidesOffset = (swiperSize - allSlidesSize) / 2;
       snapGrid.forEach((snap, snapIndex) => {
         snapGrid[snapIndex] = snap - allSlidesOffset;
       });
@@ -2094,6 +2093,7 @@ function preventEdgeSwipe(swiper, event, startX) {
 }
 function onTouchStart(event) {
   const swiper = this;
+  if (swiper.destroyed) return;
   const document2 = getDocument();
   let e = event;
   if (e.originalEvent) e = e.originalEvent;
@@ -2187,6 +2187,7 @@ function onTouchStart(event) {
 function onTouchMove(event) {
   const document2 = getDocument();
   const swiper = this;
+  if (swiper.destroyed) return;
   const data = swiper.touchEventsData;
   const {
     params,
@@ -2436,6 +2437,7 @@ function onTouchMove(event) {
 }
 function onTouchEnd(event) {
   const swiper = this;
+  if (swiper.destroyed) return;
   const data = swiper.touchEventsData;
   let e = event;
   if (e.originalEvent) e = e.originalEvent;
@@ -2606,7 +2608,8 @@ function onResize() {
   swiper.updateSlidesClasses();
   const isVirtualLoop = isVirtual && params.loop;
   if ((params.slidesPerView === "auto" || params.slidesPerView > 1) && swiper.isEnd && !swiper.isBeginning && !swiper.params.centeredSlides && !isVirtualLoop) {
-    swiper.slideTo(swiper.slides.length - 1, 0, false, true);
+    const slides = isVirtual ? swiper.virtual.slides : swiper.slides;
+    swiper.slideTo(slides.length - 1, 0, false, true);
   } else {
     if (swiper.params.loop && !isVirtual) {
       swiper.slideToLoop(swiper.realIndex, 0, false, true);
@@ -2630,6 +2633,7 @@ function onResize() {
 }
 function onClick(e) {
   const swiper = this;
+  if (swiper.destroyed) return;
   if (!swiper.enabled) return;
   if (!swiper.allowClick) {
     if (swiper.params.preventClicks) e.preventDefault();
@@ -2641,6 +2645,7 @@ function onClick(e) {
 }
 function onScroll() {
   const swiper = this;
+  if (swiper.destroyed) return;
   const {
     wrapperEl,
     rtlTranslate,
@@ -2670,6 +2675,7 @@ function onScroll() {
 }
 function onLoad(e) {
   const swiper = this;
+  if (swiper.destroyed) return;
   processLazyPreloader(swiper, e.target);
   if (swiper.params.cssMode || swiper.params.slidesPerView !== "auto" && !swiper.params.autoHeight) {
     return;
@@ -2678,6 +2684,7 @@ function onLoad(e) {
 }
 function onDocumentTouchStart() {
   const swiper = this;
+  if (swiper.destroyed) return;
   if (swiper.documentTouchHandlerProceeded) return;
   swiper.documentTouchHandlerProceeded = true;
   if (swiper.params.touchReleaseOnEdges) {
@@ -3196,7 +3203,11 @@ var Swiper = class _Swiper {
     swiper.eventsAnyListeners = [];
     swiper.modules = [...swiper.__modules__];
     if (params.modules && Array.isArray(params.modules)) {
-      swiper.modules.push(...params.modules);
+      params.modules.forEach((mod) => {
+        if (typeof mod === "function" && swiper.modules.indexOf(mod) < 0) {
+          swiper.modules.push(mod);
+        }
+      });
     }
     const allModulesParams = {};
     swiper.modules.forEach((mod) => {

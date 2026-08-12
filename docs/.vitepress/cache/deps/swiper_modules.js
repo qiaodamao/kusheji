@@ -18,7 +18,7 @@ import {
   now,
   setCSSProperty,
   setInnerHTML
-} from "./chunk-LVBMC5WQ.js";
+} from "./chunk-SDPRHBCA.js";
 import "./chunk-BUSYA2B4.js";
 
 // node_modules/swiper/modules/virtual.mjs
@@ -2858,12 +2858,6 @@ function A11y({
       subEl.setAttribute("aria-roledescription", description);
     });
   }
-  function addElControls(el, controls) {
-    el = makeElementsArray(el);
-    el.forEach((subEl) => {
-      subEl.setAttribute("aria-controls", controls);
-    });
-  }
   function addElLabel(el, label) {
     el = makeElementsArray(el);
     el.forEach((subEl) => {
@@ -2891,7 +2885,7 @@ function A11y({
   function enableEl(el) {
     el = makeElementsArray(el);
     el.forEach((subEl) => {
-      subEl.setAttribute("aria-disabled", false);
+      subEl.removeAttribute("aria-disabled");
     });
   }
   function onEnterOrSpaceKey(e) {
@@ -2985,7 +2979,6 @@ function A11y({
       el.addEventListener("keydown", onEnterOrSpaceKey);
     }
     addElLabel(el, message);
-    addElControls(el, wrapperId);
   };
   const handlePointerDown = (e) => {
     if (focusTargetSlideEl && focusTargetSlideEl !== e.target && !focusTargetSlideEl.contains(e.target)) {
@@ -3012,7 +3005,8 @@ function A11y({
     const slideEl = e.target.closest(`.${swiper.params.slideClass}, swiper-slide`);
     if (!slideEl || !swiper.slides.includes(slideEl)) return;
     focusTargetSlideEl = slideEl;
-    const isActive = swiper.slides.indexOf(slideEl) === swiper.activeIndex;
+    const isVirtual = swiper.virtual && swiper.params.virtual.enabled;
+    const isActive = (isVirtual ? parseInt(slideEl.getAttribute("data-swiper-slide-index"), 10) : swiper.slides.indexOf(slideEl)) === swiper.activeIndex;
     const isVisible = swiper.params.watchSlidesProgress && swiper.visibleSlides && swiper.visibleSlides.includes(slideEl);
     if (isActive || isVisible) return;
     if (e.sourceCapabilities && e.sourceCapabilities.firesTouchEvents) return;
@@ -3025,6 +3019,8 @@ function A11y({
       if (preventFocusHandler) return;
       if (swiper.params.loop) {
         swiper.slideToLoop(swiper.getSlideIndexWhenGrid(parseInt(slideEl.getAttribute("data-swiper-slide-index"))), 0);
+      } else if (isVirtual) {
+        swiper.slideTo(swiper.getSlideIndexWhenGrid(parseInt(slideEl.getAttribute("data-swiper-slide-index"), 10)), 0);
       } else {
         swiper.slideTo(swiper.getSlideIndexWhenGrid(swiper.slides.indexOf(slideEl)), 0);
       }
@@ -4148,7 +4144,7 @@ function Grid({
       slidesNumberEvenToRows = Math.ceil(slidesLength / rows) * rows;
     }
     if (slidesPerView !== "auto" && fill === "row") {
-      slidesNumberEvenToRows = Math.max(slidesNumberEvenToRows, slidesPerView * rows);
+      slidesNumberEvenToRows = Math.max(slidesNumberEvenToRows, Math.floor(slidesPerView) * rows);
     }
     slidesPerRow = slidesNumberEvenToRows / rows;
   };

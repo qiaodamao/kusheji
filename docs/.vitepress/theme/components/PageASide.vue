@@ -227,7 +227,6 @@ onMounted(() => {
   .acontent {
     background-color: var(--vp-c-bg-alt);
     border-radius: 0;
-    border: .5px solid var(--vp-c-gray-soft);
     display: flex;
     flex-direction: column;
     align-items: center;

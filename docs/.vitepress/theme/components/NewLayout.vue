@@ -11,11 +11,12 @@
         <template #layout-top>
             <ClientOnly>
                 <Teleport to="body">
-                    <div class="snow" v-if="theme.website?.showSnow&&isDark">
+                    <div class="snow" v-if="theme.website?.showSnow">
                         <div v-for="index in 80" :key="index" class="dot"></div>
                     </div>
                 </Teleport>
                 <Lantern/>
+                <Firework></Firework>
             </ClientOnly>
         </template>
         <template #nav-bar-content-after>
@@ -45,11 +46,6 @@
         </template>
         <template #sidebar-nav-before>
             <!-- <PageNavi /> -->
-            <ClientOnly>
-                <div class="fireworkwrap">
-                    <Firework></Firework>
-                </div>
-            </ClientOnly>
         </template>
         <template #doc-top>
             <ClientOnly>
@@ -125,6 +121,18 @@ function updateLocalNavVisibility() {
 
 onMounted(() => {
     updateLocalNavVisibility()
+    // 为每个雪花用 inline style + !important 设置随机的下落时长和起始进度，确保雪花错落飘落
+    nextTick(() => {
+        const dots = document.querySelectorAll('.snow .dot')
+        dots.forEach(dot => {
+            const duration = 10 + Math.random() * 20   // 10~30s
+            const delay = -(Math.random() * duration)  // 随机起始进度
+            dot.style.setProperty('animation-duration', duration + 's', 'important')
+            dot.style.setProperty('animation-delay', delay + 's', 'important')
+            dot.style.setProperty('animation-iteration-count', 'infinite', 'important')
+            dot.style.setProperty('animation-play-state', 'running', 'important')
+        })
+    })
 })
 
 watch(() => route.path, () => {

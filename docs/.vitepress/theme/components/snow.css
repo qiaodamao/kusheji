@@ -1298,10 +1298,10 @@
   }
 }
 
-body[data-theme=light] .snow {
+html:not(.dark) .snow {
   filter: drop-shadow(0 0 10px #bccde0)
 }
 
-body[data-theme=light] .snow .dot {
-  opacity: 1 !important
+html:not(.dark) .snow .dot {
+  background: #8aa4c0 !important
 }

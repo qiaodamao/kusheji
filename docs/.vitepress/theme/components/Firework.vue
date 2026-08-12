@@ -328,11 +328,11 @@ const startcanvas = () => {
         }
     }
 
-    let generalSettings = { bgAlpha: 1 };
+    let generalSettings = { bgAlpha: 0.15 };
     let rocketSettings = { size: 2, spawnRate: 1 }; //控制发射时的大小、数量
     let explosionSettings = { size:  2, fadeSpeed: 4, applyGravity: false }; //控制爆炸后的高斯模糊、大小、重力效果
     let wordSettings = { particleSize: 1, fadeSpeed: 0.3 };
-    let canvaswidth = (window.innerWidth - (1500 - 64)) / 2 + 272 - 32;
+    let canvaswidth = window.innerWidth;
 
     const canvas: any = document.getElementById("mainCanvas");
     const ctx: CanvasRenderingContext2D = canvas.getContext("2d");
@@ -367,13 +367,11 @@ const startcanvas = () => {
     function init() {
         canvas.width = canvaswidth;
         canvas.height = window.innerHeight;
-        ctx.fillStyle = 'transparent';
-        ctx.fill();
+        ctx.clearRect(0, 0, canvaswidth, window.innerHeight);
 
         textCanvas.style.background = "white";
         textCanvas.width = canvaswidth;
         textCanvas.height = 150;
-        // fireworks.push(new Firework("2024"));
         if (isDark.value) {
             bgcolor.value = { r: 22, g: 22, b: 24, a: 1 };
             fireworks.push(new Firework())
@@ -416,9 +414,11 @@ const startcanvas = () => {
 
     function animate() {
         requestAnimationFrame(animate);
-        ctx.rect(0, 0, canvaswidth, window.innerHeight);
-        ctx.fillStyle = `rgba(${bgcolor.value?.r},${bgcolor.value?.g},${bgcolor.value?.b},1)`;
-        ctx.fill();
+        // 用 destination-out 合成模式擦除 alpha，让粒子渐隐且 canvas 背景保持透明，不遮挡页面
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.fillStyle = `rgba(0,0,0,${generalSettings.bgAlpha})`;
+        ctx.fillRect(0, 0, canvaswidth, window.innerHeight);
+        ctx.globalCompositeOperation = 'source-over';
         if (Math.random() <= rocketSettings.spawnRate / 100) {
             soundManager.playSound('burstSmall');
             fireworks.push(new Firework());
@@ -614,21 +614,24 @@ onMounted(() => {
     width: 100%;
     height: 100%;
     pointer-events: none;
+    z-index: 99;
 }
 
 .message {
-    position: sticky;z-index: 100;bottom:0px;margin-top: 40px;margin-bottom: -40px;
-    bottom: 0px;
+    position: fixed;z-index: 100;left:0;
     width: 100%;
     height:40px;
-    
-    /* margin-bottom: 2rem; */
+    display: flex;
+    justify-content: center;
 
     .span {
         position: absolute;
         bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
         font-size: 12px;
         opacity: .8;
+        white-space: nowrap;
 
         .a {
             color: var(--vp-c-brand);
@@ -639,7 +642,7 @@ onMounted(() => {
 .msgwrap {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
 .messageleft {

@@ -1,7 +1,7 @@
 <template>
-  <div class="hero-banner" :style="{ backgroundImage: `url(${randomPost?.frontmatter?.cover})` }">
+  <div class="hero-banner" :style="{ backgroundImage: `url(${currentBgItem?.image})` }">
     <div class="hero-overlay"></div>
-    
+
     <div class="hero-content">
       <!-- 网站标题和描述 -->
       <div class="hero-header">
@@ -42,14 +42,14 @@
       </div>
     </div>
     
-    <!-- 右下角文章信息 -->
-    <div class="hero-post-info" v-if="randomPost">
-      <a :href="getPostUrl(randomPost)" class="post-link">
+    <!-- 右下角信息：随机模式显示文章，自定义模式显示当前背景图对应的自定义标题和链接（新窗口打开） -->
+    <div class="hero-post-info" v-if="postInfo">
+      <a :href="postInfo.link" class="post-link" :target="postInfo.external ? '_blank' : '_self'" :rel="postInfo.external ? 'noopener noreferrer' : undefined">
         <svg class="link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
           <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
         </svg>
-        <span class="post-title">{{ randomPost.frontmatter.title }}</span>
+        <span class="post-title">{{ postInfo.title }}</span>
       </a>
     </div>
   </div>
@@ -65,6 +65,45 @@ const { theme } = useData()
 const searchQuery = ref('')
 
 const randomPost = ref<any>(null)
+
+// 文章详情页地址（用于随机模式下右下角链接）
+const getPostUrl = (post: any) => {
+  return withBase(post.relativePath.replace('.md', ''))
+}
+
+// 背景图模式：'random' 随机文章封面 | 'custom' 自定义背景图
+const isRandomMode = computed(() => (theme.value as any)?.heroBgMode !== 'custom')
+
+// 统一的背景项结构：{ image, link?, title? }
+interface BgItem {
+  image: string
+  link?: string
+  title?: string
+}
+
+// 当前显示的背景项：
+// - 自定义模式：heroBgImage 支持字符串 / 字符串数组 / 对象数组 {link,image,title}，多张时每次刷新随机一张
+// - 随机模式：用随机文章封面
+const currentBgItem = ref<BgItem | null>(null)
+
+// 右下角显示的信息：随机模式取文章链接和标题；自定义模式取当前背景项的 link 和 title
+const postInfo = computed(() => {
+  if (isRandomMode.value) {
+    if (!randomPost.value) return null
+    return {
+      link: getPostUrl(randomPost.value),
+      title: randomPost.value.frontmatter.title,
+      external: false
+    }
+  }
+  const item = currentBgItem.value
+  if (!item || !item.title) return null
+  return {
+    link: item.link || 'javascript:void(0)',
+    title: item.title,
+    external: !!item.link  // 自定义模式下，配置了 link 才在新窗口打开
+  }
+})
 
 const isMobile = ref(false)
 
@@ -97,10 +136,6 @@ const hotTags = computed(() => {
   return tags.slice(0, isMobile.value ? 3 : 6)
 })
 
-const getPostUrl = (post: any) => {
-  return withBase(post.relativePath.replace('.md', ''))
-}
-
 const handleSearch = () => {
   if (searchQuery.value.trim()) {
     window.location.href = withBase(`/pages/search?search=${encodeURIComponent(searchQuery.value.trim())}`)
@@ -112,10 +147,43 @@ const searchTag = (tag: string) => {
 }
 
 onMounted(() => {
-  const postsWithCover = themeposts.filter((post: any) => post.frontmatter.cover)
-  if (postsWithCover.length > 0) {
-    const randomIndex = Math.floor(Math.random() * postsWithCover.length)
-    randomPost.value = postsWithCover[randomIndex]
+  const t = theme.value as any
+  if (!isRandomMode.value && t?.heroBgImage) {
+    // 自定义模式：从配置中随机选一张
+    const raw = t.heroBgImage
+    let items: BgItem[] = []
+    if (Array.isArray(raw)) {
+      items = raw
+        .map((it: any) => {
+          if (typeof it === 'string') return { image: it }
+          if (it && typeof it === 'object' && it.image) {
+            return { image: it.image, link: it.link, title: it.title }
+          }
+          return null
+        })
+        .filter((it: BgItem | null): it is BgItem => !!it && !!it.image)
+    } else if (typeof raw === 'string' && raw) {
+      items = [{ image: raw }]
+    }
+    if (items.length > 0) {
+      // 避免连续刷新显示同一张：用 sessionStorage 记住上次显示的 image
+      const lastImage = sessionStorage.getItem('hero_last_image')
+      let pool = items
+      if (lastImage && items.length > 1) {
+        pool = items.filter(it => it.image !== lastImage)
+      }
+      const picked = pool[Math.floor(Math.random() * pool.length)]
+      currentBgItem.value = picked
+      sessionStorage.setItem('hero_last_image', picked.image)
+    }
+  } else {
+    // 随机模式：用随机文章封面
+    const postsWithCover = themeposts.filter((post: any) => post.frontmatter.cover)
+    if (postsWithCover.length > 0) {
+      const randomIndex = Math.floor(Math.random() * postsWithCover.length)
+      randomPost.value = postsWithCover[randomIndex]
+      currentBgItem.value = { image: randomPost.value.frontmatter.cover }
+    }
   }
 })
 </script>
@@ -134,6 +202,7 @@ onMounted(() => {
   margin-bottom: 32px;
   margin-left: calc(-50vw + 50%);
   margin-right: calc(-50vw + 50%);
+  overflow: hidden;
 }
 
 .hero-overlay {
@@ -142,6 +211,7 @@ onMounted(() => {
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: 1;
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.5) 100%);
 }
 
