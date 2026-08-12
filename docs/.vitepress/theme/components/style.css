@@ -974,6 +974,15 @@ p.icons img {
     overflow: visible !important;
 }
 
+/* 移除主题切换开关（VPSwitch）点击时的蓝色 focus 轮廓 */
+.VPSwitch:focus,
+.VPSwitch:focus-visible,
+.VPSwitch.appearance:focus,
+.VPSwitch.appearance:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
 /* 中等屏幕（768-1280px）：直接显示主题切换按钮，隐藏 GitHub 社交链接和额外菜单（⋯）按钮 */
 @media (min-width: 768px) and (max-width: 1279px) {
     .VPNavBar .VPNavBarExtra {

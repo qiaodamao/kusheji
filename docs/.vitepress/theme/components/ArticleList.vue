@@ -183,7 +183,8 @@ const handleClick = () => {
     display: block !important;
     padding: 10px 0 0 0 !important;
     box-sizing: border-box !important;
-    
+    background-color: transparent !important;
+
     .title {
       margin: 0 !important;
       font-size: 14px !important;
@@ -195,12 +196,20 @@ const handleClick = () => {
       -webkit-line-clamp: 2 !important;
       -webkit-box-orient: vertical !important;
       word-wrap: break-word !important;
+      background-color: transparent !important;
     }
   }
   
   /* 手机端移除 hover 效果，因为触摸设备不需要 */
   .articlelist:hover .cover .desktop-overlay {
     opacity: 0 !important;
+  }
+
+  /* 手机端移除卡片背景色，避免深色模式下标题文字下方出现色块 */
+  .articlelist,
+  .articlelist:hover {
+    background-color: transparent !important;
+    background: transparent !important;
   }
 }
 </style>
