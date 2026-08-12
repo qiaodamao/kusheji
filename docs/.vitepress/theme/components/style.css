@@ -983,6 +983,14 @@ p.icons img {
     box-shadow: none !important;
 }
 
+/* 移动端（无 hover 能力设备）移除主题切换开关的 hover 蓝色描边 */
+@media (hover: none) {
+    .VPSwitch:hover,
+    .VPSwitch.appearance:hover {
+        border-color: var(--vp-input-border-color) !important;
+    }
+}
+
 /* 中等屏幕（768-1280px）：直接显示主题切换按钮，隐藏 GitHub 社交链接和额外菜单（⋯）按钮 */
 @media (min-width: 768px) and (max-width: 1279px) {
     .VPNavBar .VPNavBarExtra {

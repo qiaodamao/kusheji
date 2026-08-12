@@ -162,7 +162,7 @@ export default defineConfig<ThemeConfig>({
             prev: '上一篇',
             next: '下一篇'
         },
-        darkModeSwitchLabel: '暗黑切换',
+        darkModeSwitchLabel: '主题设置',
         sidebarMenuLabel: '菜单',
         returnToTopLabel: '返回顶部',
         article: {
