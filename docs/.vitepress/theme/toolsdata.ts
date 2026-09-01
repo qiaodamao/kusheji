@@ -46,7 +46,7 @@ export const toolsdata: Tools[] = [
     title: '工具',
     items: [
       {
-        icon: 'https://qt.shijuefuhao.com/c/logo-2e62cec6.svg',
+        icon: 'https://wkphoto.bj.bcebos.com/279759ee3d6d55fb99c9b97d7d224f4a20a4dd5a.jpg',
         title: '轻图 Pixlite',
         desc: '免费批量图片压缩',
         link: 'https://qt.shijuefuhao.com/',
