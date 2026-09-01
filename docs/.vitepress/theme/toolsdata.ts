@@ -46,6 +46,34 @@ export const toolsdata: Tools[] = [
     title: '工具',
     items: [
       {
+        icon: 'https://qt.shijuefuhao.com/c/logo-2e62cec6.svg',
+        title: '轻图 Pixlite',
+        desc: '免费批量图片压缩',
+        link: 'https://qt.shijuefuhao.com/',
+        linktxt: 'qt.shijuefuhao.com',
+      },
+      {
+        icon: 'https://mockup.kusheji.com/logo/android-chrome-192x192.png',
+        title: '壁纸样机生成器',
+        desc: '无需复杂操作，一键上传壁纸，轻松创建适用于手机、平板、电脑的样机效果图。',
+        link: 'https://mockup.kusheji.com/',
+        linktxt: 'mockup.kusheji.com',
+      },
+      {
+        icon: 'https://image.baidu.com/search/down?url=https://fc.sinaimg.cn/large/6364aa43gy1hl1ld9d136j2040040aa2.jpg',
+        title: '微信编辑器',
+        desc: '免费markdown微信编辑器',
+        link: 'https://md.dsxdh.com/',
+        linktxt: 'md.dsxdh.com',
+      },
+      {
+        icon: 'https://image.baidu.com/search/down?url=https://fc.sinaimg.cn/large/6364aa43gy1hl1ld9d136j2040040aa2.jpg',
+        title: '微信编辑器',
+        desc: '免费markdown微信编辑器',
+        link: 'https://md.dsxdh.com/',
+        linktxt: 'md.dsxdh.com',
+      },
+      {
         icon: 'https://image.baidu.com/search/down?url=https://fc.sinaimg.cn/large/6364aa43gy1hl1ld9d136j2040040aa2.jpg',
         title: '微信编辑器',
         desc: '免费markdown微信编辑器',
